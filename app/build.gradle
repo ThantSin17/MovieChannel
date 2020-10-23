@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 29
     buildToolsVersion "30.0.1"
@@ -15,7 +15,8 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        viewBinding true
+        dataBinding true
     }
     buildTypes {
         release {
@@ -38,4 +39,12 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
+    implementation platform('com.google.firebase:firebase-bom:25.12.0')
+    implementation 'com.google.firebase:firebase-firestore:21.7.1'
+    implementation 'com.google.firebase:firebase-analytics'
+
+    //show more text
+    implementation 'com.github.mahimrocky:ShowMoreText:1.0.2'
+
+    implementation 'com.github.KhunHtetzNaing:xGetter:3.0'
 }

@@ -6,4 +6,10 @@
     <string name="see_all">See All</string>
     <string name="title">title</string>
     <string name="drama">Drama</string>
+    <string name="release_year">2016</string>
+    <string name="duration">2h 13min</string>
+    <string name="watch_movie">Watch Movie</string>
+    <string name="download">DOWNLOAD</string>
+    <string name="english">English</string>
+    <string name="choose_movie_quality">Choose Movie Quality</string>
 </resources>

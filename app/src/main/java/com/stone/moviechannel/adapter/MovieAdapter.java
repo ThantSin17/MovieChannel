@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import com.stone.moviechannel.R;
 import com.stone.moviechannel.data.Movie;
 import com.stone.moviechannel.databinding.MovieItemLayoutBinding;
+import com.stone.moviechannel.listener.onClickMovie;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private Context context;
+    private onClickMovie listener;
     private List<Movie> movieList;
+
+    public MovieAdapter(Context context, onClickMovie listener) {
+        this.context = context;
+        this.listener = listener;
+        movieList=new ArrayList<>();
+    }
 
     public MovieAdapter(Context context) {
         this.context = context;
@@ -28,6 +36,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     public void setMovieList(List<Movie> movieList) {
         this.movieList = movieList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -38,8 +47,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        Movie movie=movieList.get(position);
-
+        final Movie movie=movieList.get(position);
+        holder.binding.itemImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.clickMovie(movie);
+            }
+        });
         holder.bind(movie);
     }
 
@@ -61,7 +75,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
         public void bind(Movie movie){
             binding.itemTitle.setText(movie.getTitle());
-            Glide.with(context).load(movie.getImageLink()).placeholder(R.drawable.loading_pinner).into(binding.itemImage);
+            Glide.with(context).load(movie.getImageLink()).placeholder(R.drawable.progress_animation).into(binding.itemImage);
 //            Toast.makeText(context, "finish", Toast.LENGTH_SHORT).show();
         }
     }

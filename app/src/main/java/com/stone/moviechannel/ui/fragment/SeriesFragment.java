@@ -56,11 +56,11 @@ public class SeriesFragment extends Fragment {
 
     }
     void init(){
-        movieList.add(new Movie("testing","","","https://1.bp.blogspot.com/-hu8UkD96vUo/XfUqEBvgB6I/AAAAAAAABDg/evxNz84MTQA1NbairvLaKVqYpc-8wnMKACLcBGAsYHQ/s1600/spiderman_homecoming.jpg",""));
-        movieList.add(new Movie("testing","","","https://1.bp.blogspot.com/-hu8UkD96vUo/XfUqEBvgB6I/AAAAAAAABDg/evxNz84MTQA1NbairvLaKVqYpc-8wnMKACLcBGAsYHQ/s1600/spiderman_homecoming.jpg",""));
-        movieList.add(new Movie("testing","","","https://1.bp.blogspot.com/-hu8UkD96vUo/XfUqEBvgB6I/AAAAAAAABDg/evxNz84MTQA1NbairvLaKVqYpc-8wnMKACLcBGAsYHQ/s1600/spiderman_homecoming.jpg",""));
-        movieList.add(new Movie("testing","","","https://1.bp.blogspot.com/-hu8UkD96vUo/XfUqEBvgB6I/AAAAAAAABDg/evxNz84MTQA1NbairvLaKVqYpc-8wnMKACLcBGAsYHQ/s1600/spiderman_homecoming.jpg",""));
-        movieList.add(new Movie("testing","","","https://1.bp.blogspot.com/-hu8UkD96vUo/XfUqEBvgB6I/AAAAAAAABDg/evxNz84MTQA1NbairvLaKVqYpc-8wnMKACLcBGAsYHQ/s1600/spiderman_homecoming.jpg",""));
+//        movieList.add(new Movie("testing","","","https://1.bp.blogspot.com/-hu8UkD96vUo/XfUqEBvgB6I/AAAAAAAABDg/evxNz84MTQA1NbairvLaKVqYpc-8wnMKACLcBGAsYHQ/s1600/spiderman_homecoming.jpg",""));
+//        movieList.add(new Movie("testing","","","https://1.bp.blogspot.com/-hu8UkD96vUo/XfUqEBvgB6I/AAAAAAAABDg/evxNz84MTQA1NbairvLaKVqYpc-8wnMKACLcBGAsYHQ/s1600/spiderman_homecoming.jpg",""));
+//        movieList.add(new Movie("testing","","","https://1.bp.blogspot.com/-hu8UkD96vUo/XfUqEBvgB6I/AAAAAAAABDg/evxNz84MTQA1NbairvLaKVqYpc-8wnMKACLcBGAsYHQ/s1600/spiderman_homecoming.jpg",""));
+//        movieList.add(new Movie("testing","","","https://1.bp.blogspot.com/-hu8UkD96vUo/XfUqEBvgB6I/AAAAAAAABDg/evxNz84MTQA1NbairvLaKVqYpc-8wnMKACLcBGAsYHQ/s1600/spiderman_homecoming.jpg",""));
+//        movieList.add(new Movie("testing","","","https://1.bp.blogspot.com/-hu8UkD96vUo/XfUqEBvgB6I/AAAAAAAABDg/evxNz84MTQA1NbairvLaKVqYpc-8wnMKACLcBGAsYHQ/s1600/spiderman_homecoming.jpg",""));
 
     }
 

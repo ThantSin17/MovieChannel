@@ -1,4 +1,4 @@
-package com.stone.moviechannel;
+package com.stone.moviechannel.ui.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.stone.moviechannel.R;
 import com.stone.moviechannel.adapter.ImageSliderAdapter;
 import com.stone.moviechannel.data.ImageSlide;
 import com.stone.moviechannel.databinding.ActivityMainBinding;
