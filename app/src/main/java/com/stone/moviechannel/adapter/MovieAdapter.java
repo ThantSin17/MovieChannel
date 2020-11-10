@@ -22,32 +22,37 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private Context context;
     private onClickMovie listener;
     private List<Movie> movieList;
+    private List<Movie> tempList;
 
     public MovieAdapter(Context context, onClickMovie listener) {
         this.context = context;
         this.listener = listener;
-        movieList=new ArrayList<>();
+        movieList = new ArrayList<>();
+        tempList=new ArrayList<>();
     }
 
     public MovieAdapter(Context context) {
         this.context = context;
-        movieList=new ArrayList<>();
+        movieList = new ArrayList<>();
     }
 
     public void setMovieList(List<Movie> movieList) {
         this.movieList = movieList;
         notifyDataSetChanged();
     }
+    public void filter(String s){
+
+    }
 
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MovieViewHolder(MovieItemLayoutBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
+        return new MovieViewHolder(MovieItemLayoutBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        final Movie movie=movieList.get(position);
+        final Movie movie = movieList.get(position);
         holder.binding.itemImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,16 +72,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return position;
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder{
+    public class MovieViewHolder extends RecyclerView.ViewHolder {
         MovieItemLayoutBinding binding;
+
         public MovieViewHolder(@NonNull MovieItemLayoutBinding itemView) {
             super(itemView.getRoot());
-            binding=itemView;
+            binding = itemView;
         }
-        public void bind(Movie movie){
-            binding.itemTitle.setText(movie.getTitle());
-            Glide.with(context).load(movie.getImageLink()).placeholder(R.drawable.progress_animation).into(binding.itemImage);
-//            Toast.makeText(context, "finish", Toast.LENGTH_SHORT).show();
+
+        public void bind(Movie movie) {
+
+            binding.itemTitle.setText(movie.title);
+            Glide.with(context).load(movie.imageLink).placeholder(R.drawable.progress_animation).into(binding.itemImage);
+//          Toast.makeText(context, "finish", Toast.LENGTH_SHORT).show();
+
         }
     }
 

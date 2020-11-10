@@ -1,102 +1,61 @@
 package com.stone.moviechannel.model;
 
 import android.content.Context;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.stone.moviechannel.data.Movie;
+import com.stone.moviechannel.database.AppDatabase;
 import com.stone.moviechannel.listener.GetAllMovie;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import androidx.annotation.NonNull;
+import androidx.room.Room;
 
 public class AppModel {
     private static AppModel INSTANCE;
 
-    private static FirebaseFirestore db;
+    private static AppDatabase db;
 
-    public static AppModel getINSTANCE() {
+
+    public static AppModel getINSTANCE(Context context) {
         if (INSTANCE == null) {
             INSTANCE = new AppModel();
-            db = FirebaseFirestore.getInstance();
+
+            db= Room.databaseBuilder(context,AppDatabase.class,"Movies").allowMainThreadQueries().build();
         }
         return INSTANCE;
     }
 
-    public  void getAction(final Context context, final GetAllMovie getAllMovie) {
-        final List<Movie> movies = new ArrayList<>();
-        db.collection("Action")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Movie movie = document.toObject(Movie.class);
-                                movies.add(movie);
-                                //Toast.makeText(context, movie.getImageLink(), Toast.LENGTH_SHORT).show();
-                            }
-                            getAllMovie.getAllMovie(movies);
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        getAllMovie.fail(e.getMessage());
-                    }
-                });
+
+
+    public void Add(Movie movies){
+        db.movieDao().updateAll(movies);
+    }
+    public  void getAction(GetAllMovie getAllMovie) {
+        try {
+           getAllMovie.getAllMovie(db.movieDao().getAction());
+        }catch (Exception e){
+            getAllMovie.fail(e.getMessage());
+        }
+
+    }
+    public  void getAll(GetAllMovie getAllMovie) {
+        try {
+            getAllMovie.getAllMovie(db.movieDao().getAllMovie());
+        }catch (Exception e){
+            getAllMovie.fail(e.getMessage());
+        }
+
     }
 
-    public  void getMovie(final Context context, final GetAllMovie getAllMovie) {
-        final List<Movie> movies = new ArrayList<>();
-        db.collection("Movie")
-                .get()
-//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                        if (!queryDocumentSnapshots.isEmpty()){
-//                            Toast.makeText(context, queryDocumentSnapshots.get, Toast.LENGTH_SHORT).show();
-//                            for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots){
-//                                Movie movie=snapshot.toObject(Movie.class);
-//                                movies.add(movie);
-//                            }
-////                            List<Movie> movie=queryDocumentSnapshots.toObjects(Movie.class);
-////                            movies.addAll(movie);
-//                            getAllMovie.getAllMovie(movies);
-//                        }
-//                    }
-//                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // getAllMovie.fail(e.getMessage());
-                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Movie movie = document.toObject(Movie.class);
-                                movies.add(movie);
-                                //Toast.makeText(context, movie.getImageLink(), Toast.LENGTH_SHORT).show();
-                            }
-                            getAllMovie.getAllMovie(movies);
-                        }
-                    }
-                });
+    public  void getDrama(final GetAllMovie getAllMovie) {
+        try {
+            getAllMovie.getAllMovie(db.movieDao().getDrama());
+        }catch (Exception e){
+            getAllMovie.fail(e.getMessage());
+        }
+    }
+    public void makeNullTable(){
+        db.movieDao().NullTable();
     }
 }

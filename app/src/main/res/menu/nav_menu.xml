@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item android:title="@string/categories">
+        <menu>
+            <item
+                android:id="@+id/most_view"
+                android:icon="@drawable/ic_viewers"
+                android:title="@string/most_view" />
+            <item
+                android:id="@+id/most_download"
+                android:icon="@drawable/ic_download"
+                android:title="@string/most_download" />
+            <item
+                android:id="@+id/top_rating"
+                android:icon="@drawable/ic_movie"
+                android:title="@string/top_rating" />
+        </menu>
+    </item>
+    <item android:title="@string/config">
+        <menu>
+            <item
+                android:id="@+id/setting"
+                android:icon="@drawable/ic_settings"
+                android:title="@string/setting" />
+            <item
+                android:id="@+id/about"
+                android:icon="@drawable/ic_baseline_account_box_24"
+                android:title="@string/about" />
+        </menu>
+    </item>
+
+</menu>

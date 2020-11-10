@@ -1,33 +1,38 @@
 package com.stone.moviechannel.ui.activity;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 import com.htetznaing.lowcostvideo.LowCostVideo;
 import com.htetznaing.lowcostvideo.Model.XModel;
 import com.stone.moviechannel.R;
 import com.stone.moviechannel.data.Movie;
-import com.stone.moviechannel.data.VideoDetail;
 import com.stone.moviechannel.databinding.ChooseQualityLayoutBinding;
 import com.stone.moviechannel.databinding.SingleMovieDetailBinding;
-import com.stone.moviechannel.dialog.ChooseQuality;
+import com.stone.moviechannel.model.AppModel;
+import com.stone.moviechannel.model.FireStoreModel;
 
 import java.util.ArrayList;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 public class SingleMovieDetail extends AppCompatActivity {
 
@@ -37,12 +42,18 @@ public class SingleMovieDetail extends AppCompatActivity {
     private static Movie movie;
     private LowCostVideo xGetter;
     private ProgressDialog pb;
+    private static FirebaseFirestore db;
+    private int view,download=0;
+
     String url="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataBinding= DataBindingUtil.setContentView(this,R.layout.single_movie_detail);
+
+        db=FirebaseFirestore.getInstance();
+        getViewerAndDownload();
 
         pb=new ProgressDialog(this);
         pb.setMessage("Loading movie .....");
@@ -86,13 +97,63 @@ public class SingleMovieDetail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 pb.show();
-                xGetter.find(movie.getMovieLink());
-//                Toast.makeText(SingleMovieDetail.this, "click view", Toast.LENGTH_SHORT).show();
-//
-//                startActivity(PlayerActivity.gotoPlayerActivity(SingleMovieDetail.this,movie.getMovieLink()));
+                updateView();
+                xGetter.find(movie.movieLink);
+            }
+        });
+        dataBinding.download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateDownload();
             }
         });
 
+    }
+
+    private void getViewerAndDownload() {
+        db.collection("Movie")
+                .whereEqualTo("id",movie.id)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error!=null){
+                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        assert value != null;
+                        for (QueryDocumentSnapshot snapshot:value){
+                            Toast.makeText(getApplicationContext(), snapshot.getLong("download").intValue()+"", Toast.LENGTH_SHORT).show();
+                            view=snapshot.getLong("viewer").intValue();
+                            download=snapshot.getLong("download").intValue();
+                            view_download(view,download);
+                        }
+
+
+
+                    }
+                });
+    }
+
+    private void updateView(){
+        WriteBatch batch1=db.batch();
+        ++view;
+        DocumentReference Ref = db.collection("Movie").document(String.valueOf(movie.id));
+        batch1.update(Ref, "viewer",Long.valueOf(view));
+        batch1.commit();
+        dataBinding.movieViewer.setText(String.valueOf(view));
+
+    }
+    private void updateDownload(){
+        WriteBatch batch2=db.batch();
+        download++;
+        DocumentReference sfRef = db.collection("Movie").document(String.valueOf(movie.id));
+        batch2.update(sfRef, "download", Long.valueOf(download));
+        batch2.commit();
+        dataBinding.movieDownload.setText(String.valueOf(download));
+    }
+    private void view_download(int view,int download){
+        dataBinding.movieDownload.setText(String.valueOf(download));
+        dataBinding.movieViewer.setText(String.valueOf(view));
     }
     public void ChooseQuality(final ArrayList<XModel> vidURL) {
 
@@ -137,5 +198,6 @@ public class SingleMovieDetail extends AppCompatActivity {
     public static Intent gotoSingleMovieDetail(Context context, Movie mMovie){
         movie=mMovie;
         return new Intent(context,SingleMovieDetail.class);
+
     }
 }

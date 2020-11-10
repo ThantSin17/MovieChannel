@@ -46,12 +46,12 @@ public class DramaFragment extends Fragment implements GetAllMovie, onClickMovie
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding=FragmentDramaBinding.bind(view);
-        appModel=AppModel.getINSTANCE();
+        appModel=AppModel.getINSTANCE(getActivity());
 
 
 
         adapter = new MovieAdapter(this.getContext(),this);
-        appModel.getMovie(this.getContext(),this);
+        appModel.getDrama(this);
 
         binding.rcDrama.setLayoutManager(new LinearLayoutManager(this.getContext(),LinearLayoutManager.HORIZONTAL,false));
         binding.rcDrama.setHasFixedSize(true);

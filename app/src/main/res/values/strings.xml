@@ -12,4 +12,16 @@
     <string name="download">DOWNLOAD</string>
     <string name="english">English</string>
     <string name="choose_movie_quality">Choose Movie Quality</string>
+    <string name="movie_review">Movie Review</string>
+    <string name="change_font">Change Font</string>
+    <string name="most_view">Most View</string>
+    <string name="most_download">Most Download</string>
+    <string name="top_rating">Top Rating</string>
+    <string name="about">About</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="config">Config</string>
+    <string name="setting">Setting</string>
+    <string name="categories">Categories</string>
+    <string name="search">Search</string>
 </resources>

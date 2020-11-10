@@ -47,11 +47,11 @@ public class ActionFragment extends Fragment implements GetAllMovie, onClickMovi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentActionBinding.bind(view);
-        appModel = AppModel.getINSTANCE();
+        appModel = AppModel.getINSTANCE(getActivity());
 
         adapter = new MovieAdapter(getContext(),this);
 
-        appModel.getAction(this.getContext(),this);
+        appModel.getAction(this);
 
         binding.rcAction.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.rcAction.setHasFixedSize(true);
