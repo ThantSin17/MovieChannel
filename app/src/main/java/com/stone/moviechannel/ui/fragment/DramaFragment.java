@@ -13,6 +13,7 @@ import com.stone.moviechannel.databinding.FragmentDramaBinding;
 import com.stone.moviechannel.listener.GetAllMovie;
 import com.stone.moviechannel.listener.onClickMovie;
 import com.stone.moviechannel.model.AppModel;
+import com.stone.moviechannel.ui.activity.SeriesActivity;
 import com.stone.moviechannel.ui.activity.SingleMovieDetail;
 
 import java.util.List;
@@ -51,7 +52,7 @@ public class DramaFragment extends Fragment implements GetAllMovie, onClickMovie
 
 
         adapter = new MovieAdapter(this.getContext(),this);
-        appModel.getDrama(this);
+        appModel.getMovie(this,"drama");
 
         binding.rcDrama.setLayoutManager(new LinearLayoutManager(this.getContext(),LinearLayoutManager.HORIZONTAL,false));
         binding.rcDrama.setHasFixedSize(true);
@@ -65,7 +66,6 @@ public class DramaFragment extends Fragment implements GetAllMovie, onClickMovie
     public void getAllMovie(List<Movie> movies) {
 
         adapter.setMovieList(movies);
-        Toast.makeText(getContext(),movies.size()+"", Toast.LENGTH_SHORT).show();
     }
 
     @Override

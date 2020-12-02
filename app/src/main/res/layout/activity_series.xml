@@ -9,6 +9,7 @@
             name="movie"
             type="com.stone.moviechannel.data.Movie" />
 
+
     </data>
 
     <ScrollView
@@ -80,7 +81,7 @@
                             android:layout_margin="10dp"
                             android:background="@drawable/imageview_background"
                             android:scaleType="fitXY"
-                            app:profileImage="@{movie.imageLink}"
+                            android:src="@drawable/spiderman_homecoming"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -267,67 +268,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_top">
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:id="@+id/watch"
-                        android:layout_width="0dp"
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectEpisode"
+                        android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_margin="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/download_background"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
-                        android:text="@string/watch_movie"
-                        android:textColor="@color/colorAccent"
-                        android:textStyle="bold">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_marginStart="5dp"
-                            app:srcCompat="@drawable/ic_play_movie"
-                            app:tint="@color/colorWhite" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="@string/watch_movie"
-                            android:textColor="@color/colorWhite"
-                            android:textStyle="bold" />
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:id="@+id/download"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_margin="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/videoview_background"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
-                        android:text="@string/watch_movie"
-                        android:textColor="@color/colorAccent"
-                        android:textStyle="bold">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginStart="5dp"
-                            app:srcCompat="@drawable/ic_download"
-                            app:tint="@color/colorWhite" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="@string/download"
-                            android:textColor="@color/colorWhite"
-                            android:textStyle="bold" />
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
+                        android:gravity="center"
+                        android:autofillHints="Select episode"
+                        android:prompt="@string/about"
+                        android:spinnerMode="dropdown" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <View

@@ -38,10 +38,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     public void setMovieList(List<Movie> movieList) {
         this.movieList = movieList;
+        tempList=movieList;
         notifyDataSetChanged();
     }
     public void filter(String s){
-
+        if (s.isEmpty() || s.equals(" ")){
+            movieList=tempList;
+        }else {
+            List<Movie> temp=new ArrayList<>();
+            for (Movie movie: tempList){
+                if (movie.title.contains(s)){
+                    temp.add(movie);
+                }
+            }
+            movieList=temp;
+        }
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -70,6 +82,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public int getItemViewType(int position) {
         return position;
+    }
+
+    public List<Movie> getData() {
+        return movieList;
     }
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {

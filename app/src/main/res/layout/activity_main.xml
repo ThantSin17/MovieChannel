@@ -31,44 +31,23 @@
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/indicator"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/image_slider"
-                app:layout_constraintEnd_toEndOf="@+id/image_slider"
-                app:layout_constraintStart_toStartOf="@+id/image_slider"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:tabBackground="@drawable/tab_selector"
                 app:tabGravity="center"
                 app:tabIndicatorHeight="0dp" />
 
-            <HorizontalScrollView
-                android:id="@+id/categories_scroll"
+            <FrameLayout
+                android:id="@+id/latest_layout"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_slider">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Top Rating" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Most View" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Most Download" />
-                </LinearLayout>
-            </HorizontalScrollView>
-
+                app:layout_constraintTop_toBottomOf="@+id/image_slider" />
             <FrameLayout
                 android:id="@+id/action_layout"
                 android:layout_width="0dp"
@@ -77,8 +56,16 @@
                 android:background="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/categories_scroll" />
-
+                app:layout_constraintTop_toBottomOf="@id/latest_layout" />
+            <FrameLayout
+                android:id="@+id/comedy_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/action_layout" />
 
             <FrameLayout
                 android:id="@+id/drama_layout"
@@ -88,9 +75,34 @@
                 android:background="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/action_layout" />
-
-
+                app:layout_constraintTop_toBottomOf="@id/comedy_layout" />
+            <FrameLayout
+                android:id="@+id/animation_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/drama_layout" />
+            <FrameLayout
+                android:id="@+id/china_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/animation_layout" />
+            <FrameLayout
+                android:id="@+id/superhero_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/china_layout" />
             <FrameLayout
                 android:id="@+id/series_layout"
                 android:layout_width="0dp"
@@ -99,7 +111,7 @@
                 android:background="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/drama_layout" />
+                app:layout_constraintTop_toBottomOf="@+id/superhero_layout" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

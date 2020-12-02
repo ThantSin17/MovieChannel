@@ -13,16 +13,18 @@ public interface MovieDao {
     @Query("select * from movie order by id desc")
     List<Movie> getAllMovie();
 
-    @Query("select * from movie where movieType='action' order by id desc")
-    List<Movie> getAction();
-
-    @Query("select * from movie where movieType='drama' order by id desc")
-    List<Movie> getDrama();
 
     @Insert
     void updateAll(Movie movies);
 
     @Query("DELETE FROM movie")
     public void NullTable();
+
+    @Query("select * from movie where movieType like :category order by id desc")
+    List<Movie> getMovie(String category);
+
+    @Query("Select * from movie order by id desc")
+    List<Movie> searchByViewer();
+
 
 }

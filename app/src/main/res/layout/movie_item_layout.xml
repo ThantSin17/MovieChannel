@@ -3,22 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginBottom="5dp"
     app:cardCornerRadius="15dp"
     app:cardElevation="5dp"
-    android:layout_marginEnd="5dp"
-    app:cardPreventCornerOverlap="true"
-    >
+    app:cardPreventCornerOverlap="true">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/item_image"
-            android:layout_width="150dp"
-            android:layout_height="200dp"
+            android:layout_width="120dp"
+            android:layout_height="170dp"
             android:scaleType="fitXY"
             android:src="@drawable/spiderman_homecoming" />
 

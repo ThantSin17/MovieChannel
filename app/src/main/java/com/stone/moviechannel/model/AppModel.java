@@ -31,14 +31,7 @@ public class AppModel {
     public void Add(Movie movies){
         db.movieDao().updateAll(movies);
     }
-    public  void getAction(GetAllMovie getAllMovie) {
-        try {
-           getAllMovie.getAllMovie(db.movieDao().getAction());
-        }catch (Exception e){
-            getAllMovie.fail(e.getMessage());
-        }
-
-    }
+    
     public  void getAll(GetAllMovie getAllMovie) {
         try {
             getAllMovie.getAllMovie(db.movieDao().getAllMovie());
@@ -48,9 +41,10 @@ public class AppModel {
 
     }
 
-    public  void getDrama(final GetAllMovie getAllMovie) {
+
+    public  void getMovie(final GetAllMovie getAllMovie,String category) {
         try {
-            getAllMovie.getAllMovie(db.movieDao().getDrama());
+            getAllMovie.getAllMovie(db.movieDao().getMovie(category));
         }catch (Exception e){
             getAllMovie.fail(e.getMessage());
         }
@@ -58,4 +52,6 @@ public class AppModel {
     public void makeNullTable(){
         db.movieDao().NullTable();
     }
+
+
 }

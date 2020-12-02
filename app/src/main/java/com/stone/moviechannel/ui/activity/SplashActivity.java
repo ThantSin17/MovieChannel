@@ -53,6 +53,7 @@ public class SplashActivity extends AppCompatActivity {
                             }
                             Toast.makeText(SplashActivity.this, "finish", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(SplashActivity.this,MainActivity.class));
+                            finish();
 
                         }
                     }

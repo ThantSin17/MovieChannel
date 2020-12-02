@@ -14,6 +14,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity android:name=".ui.activity.SeriesActivity"></activity>
+        <activity
+            android:name=".ui.activity.VideoList"
+            android:theme="@style/MainTheme" />
         <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +29,9 @@
             android:name=".ui.activity.PlayerActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".ui.activity.SingleMovieDetail" />
-        <activity android:name=".ui.activity.MainActivity" android:theme="@style/MainTheme"/>
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:theme="@style/MainTheme" />
     </application>
 
 </manifest>

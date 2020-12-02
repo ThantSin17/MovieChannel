@@ -1,5 +1,10 @@
 package com.stone.moviechannel.data;
 
+import com.bumptech.glide.Glide;
+import com.stone.moviechannel.R;
+
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.databinding.BindingAdapter;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -34,6 +39,12 @@ public class Movie {
     @Ignore
     public Movie() {
 
+    }
+    @BindingAdapter("profileImage")
+    public static void loadImageView(AppCompatImageView imageView,String url){
+        Glide.with(imageView.getContext())
+                .load(url).placeholder(R.drawable.progress_animation)
+                .into(imageView);
     }
 
 //    public String getCountry() {
