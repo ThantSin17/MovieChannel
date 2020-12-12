@@ -20,11 +20,13 @@ public class Movie {
     public String description,movieLink,imageLink,movieType,time;
     @ColumnInfo
     public String country,year;
+    @ColumnInfo
+    public boolean bookmark;
+    @ColumnInfo
+    public int download,viewer;
 
-    //private int downloadCount,viewCount;
 
-
-    public Movie(int id, String title, String description, String movieLink, String imageLink, String movieType, String time, String country, String year) {
+    public Movie(int id, String title, String description, String movieLink, String imageLink, String movieType, String time, String country, String year,boolean bookmark,int download,int viewer) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -34,6 +36,9 @@ public class Movie {
         this.time = time;
         this.country = country;
         this.year = year;
+        this.bookmark=bookmark;
+        this.download=download;
+        this.viewer=viewer;
     }
 
     @Ignore

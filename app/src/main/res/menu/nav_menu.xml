@@ -11,10 +11,14 @@
                 android:id="@+id/most_download"
                 android:icon="@drawable/ic_download"
                 android:title="@string/most_download" />
+<!--            <item-->
+<!--                android:id="@+id/top_rating"-->
+<!--                android:icon="@drawable/ic_movie"-->
+<!--                android:title="@string/top_rating" />-->
             <item
-                android:id="@+id/top_rating"
-                android:icon="@drawable/ic_movie"
-                android:title="@string/top_rating" />
+                android:id="@+id/book_mark"
+                android:icon="@drawable/ic_bookmark"
+                android:title="@string/bookmark" />
         </menu>
     </item>
     <item android:title="@string/config">

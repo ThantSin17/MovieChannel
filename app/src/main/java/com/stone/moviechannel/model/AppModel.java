@@ -52,6 +52,33 @@ public class AppModel {
     public void makeNullTable(){
         db.movieDao().NullTable();
     }
+    public void updateBookmark(Movie movie){
+         db.movieDao().updateBookmark(movie);
+    }
 
+    public Movie getMovieById(int id){
+        return db.movieDao().getMovieById(id);
+    }
+    public void getViewer(GetAllMovie getAllMovie){
+        try {
+            getAllMovie.getAllMovie(db.movieDao().getViewer());
+        }catch (Exception e){
+            getAllMovie.fail(e.getMessage());
+        }
+    }
+    public void getDownload(GetAllMovie getAllMovie){
+        try {
+            getAllMovie.getAllMovie(db.movieDao().getDownload());
+        }catch (Exception e){
+            getAllMovie.fail(e.getMessage());
+        }
+    }
+    public void getBookMark(GetAllMovie getAllMovie){
+        try {
+            getAllMovie.getAllMovie(db.movieDao().getBookMark());
+        }catch (Exception e){
+            getAllMovie.fail(e.getMessage());
+        }
+    }
 
 }

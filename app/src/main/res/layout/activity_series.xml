@@ -311,7 +311,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/view_line" />
 
-                <com.skyhope.showmoretextview.ShowMoreTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/movieDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

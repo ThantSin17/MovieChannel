@@ -95,9 +95,7 @@ public class SeriesActivity extends AppCompatActivity {
         });
 
         binding.setMovie(movie);
-        binding.movieDescription.setShowingLine(7);
-        binding.movieDescription.addShowMoreText("Show More");
-        binding.movieDescription.addShowLessText("Less");
+
 
         binding.backspace.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -11,6 +11,7 @@ import com.stone.moviechannel.R;
 import com.stone.moviechannel.data.Movie;
 import com.stone.moviechannel.databinding.MovieItemLayoutBinding;
 import com.stone.moviechannel.listener.onClickMovie;
+import com.stone.moviechannel.model.AppModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +24,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private onClickMovie listener;
     private List<Movie> movieList;
     private List<Movie> tempList;
+    private AppModel appModel;
 
     public MovieAdapter(Context context, onClickMovie listener) {
         this.context = context;
         this.listener = listener;
+        appModel=AppModel.getINSTANCE(context);
         movieList = new ArrayList<>();
         tempList=new ArrayList<>();
     }
@@ -47,7 +50,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }else {
             List<Movie> temp=new ArrayList<>();
             for (Movie movie: tempList){
-                if (movie.title.contains(s)){
+                if (movie.title.toLowerCase().contains(s.toLowerCase())){
                     temp.add(movie);
                 }
             }
@@ -65,12 +68,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         final Movie movie = movieList.get(position);
-        holder.binding.itemImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.clickMovie(movie);
-            }
-        });
+        holder.binding.itemImage.setOnClickListener(view -> listener.clickMovie(appModel.getMovieById(movie.id)));
         holder.bind(movie);
     }
 

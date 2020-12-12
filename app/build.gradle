@@ -48,8 +48,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:22.0.0'
     implementation 'com.google.firebase:firebase-analytics'
 
-    //show more text
-    implementation 'com.github.mahimrocky:ShowMoreText:1.0.2'
 
     //url extractor
     implementation 'com.github.KhunHtetzNaing:xGetter:3.0'

@@ -9,10 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 import com.stone.moviechannel.R;
-import com.stone.moviechannel.adapter.ImageSliderAdapter;
 import com.stone.moviechannel.adapter.MovieAdapter;
 import com.stone.moviechannel.data.ImageSlide;
 import com.stone.moviechannel.data.Movie;
@@ -25,11 +22,11 @@ import com.stone.moviechannel.ui.fragment.AnimationFragment;
 import com.stone.moviechannel.ui.fragment.ChinaFragment;
 import com.stone.moviechannel.ui.fragment.ComedyFragment;
 import com.stone.moviechannel.ui.fragment.DramaFragment;
+import com.stone.moviechannel.ui.fragment.ImageSliderFragment;
 import com.stone.moviechannel.ui.fragment.LatestFragment;
 import com.stone.moviechannel.ui.fragment.SeriesFragment;
 import com.stone.moviechannel.ui.fragment.SuperHeroFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -39,14 +36,10 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.viewpager2.widget.ViewPager2;
 
 public class MainActivity extends AppCompatActivity implements onClickMovie, GetAllMovie {
 
     private ActivityMainBinding binding;
-    private Handler handler=new Handler();
-    private int currentItem=0;
-    private List<ImageSlide> imageSlides;
     private ActionBarDrawerToggle toggle;
     private MovieAdapter mAdapter;
     private AppModel appModel;
@@ -56,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
         super.onCreate(savedInstanceState);
         binding=ActivityMainBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
-        ImageSliderAdapter adapter=new ImageSliderAdapter(this);
+
 
         appModel=AppModel.getINSTANCE(this);
         mAdapter=new MovieAdapter(this,this);
@@ -76,17 +69,20 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
                 int id=item.getItemId();
                 switch (id){
                     case R.id.most_view:
-                        startActivity(VideoList.goVideoList(MainActivity.this,"view"));
+                        startActivity(VideoList.goVideoList(MainActivity.this,"viewer"));
                         binding.drawerLayout.closeDrawers();
                         break;
                     case R.id.most_download:
                         startActivity(VideoList.goVideoList(MainActivity.this,"download"));
                         binding.drawerLayout.closeDrawers();
                         break;
-                    case R.id.top_rating:
-                        startActivity(VideoList.goVideoList(MainActivity.this,"rating"));
+//                    case R.id.top_rating:
+//                        startActivity(VideoList.goVideoList(MainActivity.this,"rating"));
+//                        binding.drawerLayout.closeDrawers();
+//                        break;
+                    case R.id.book_mark:
+                        startActivity(VideoList.goVideoList(MainActivity.this,"bookmark"));
                         binding.drawerLayout.closeDrawers();
-                        break;
                     case R.id.about:
                         Toast.makeText(MainActivity.this, "About", Toast.LENGTH_SHORT).show();
                         binding.drawerLayout.closeDrawers();
@@ -101,33 +97,6 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
             }
         });
 
-        binding.imageSlider.setAdapter(adapter);
-        imageSlides=new ArrayList<>();
-
-        ImageSlide slide=new ImageSlide();
-        slide.setImageUrl("https://1.bp.blogspot.com/-hu8UkD96vUo/XfUqEBvgB6I/AAAAAAAABDg/evxNz84MTQA1NbairvLaKVqYpc-8wnMKACLcBGAsYHQ/s1600/spiderman_homecoming.jpg");
-        imageSlides.add(slide);
-        ImageSlide slide2=new ImageSlide();
-        slide2.setImageUrl("https://1.bp.blogspot.com/-hu8UkD96vUo/XfUqEBvgB6I/AAAAAAAABDg/evxNz84MTQA1NbairvLaKVqYpc-8wnMKACLcBGAsYHQ/s1600/spiderman_homecoming.jpg");
-        imageSlides.add(slide2);
-        ImageSlide slide3=new ImageSlide();
-        slide3.setImageUrl("https://1.bp.blogspot.com/-hu8UkD96vUo/XfUqEBvgB6I/AAAAAAAABDg/evxNz84MTQA1NbairvLaKVqYpc-8wnMKACLcBGAsYHQ/s1600/spiderman_homecoming.jpg");
-        imageSlides.add(slide3);
-        ImageSlide slide4=new ImageSlide();
-        slide4.setImageUrl("https://1.bp.blogspot.com/-hu8UkD96vUo/XfUqEBvgB6I/AAAAAAAABDg/evxNz84MTQA1NbairvLaKVqYpc-8wnMKACLcBGAsYHQ/s1600/spiderman_homecoming.jpg");
-        imageSlides.add(slide4);
-        ImageSlide slide5=new ImageSlide();
-
-        slide5.setImageUrl("https://1.bp.blogspot.com/-hu8UkD96vUo/XfUqEBvgB6I/AAAAAAAABDg/evxNz84MTQA1NbairvLaKVqYpc-8wnMKACLcBGAsYHQ/s1600/spiderman_homecoming.jpg");
-        imageSlides.add(slide5);
-        adapter.setImageSlideList(imageSlides);
-
-        new TabLayoutMediator(binding.indicator, binding.imageSlider, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-
-            }
-        }).attach();
 
 
         LatestFragment latestFragment=new LatestFragment();
@@ -138,6 +107,8 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
         AnimationFragment animationFragment=new AnimationFragment();
         SuperHeroFragment superHeroFragment=new SuperHeroFragment();
         SeriesFragment fragSeries=new SeriesFragment();
+        ImageSliderFragment imageSliderFragment=new ImageSliderFragment();
+
         FragmentManager manager=getSupportFragmentManager();
         FragmentTransaction transaction=manager.beginTransaction();
         transaction.add(R.id.latest_layout,latestFragment);
@@ -148,30 +119,12 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
         transaction.add(R.id.animation_layout,animationFragment);
         transaction.add(R.id.superhero_layout,superHeroFragment);
         transaction.add(R.id.series_layout,fragSeries);
+        transaction.add(R.id.layout_image_slider,imageSliderFragment);
         transaction.commit();
 
-        binding.imageSlider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                handler.removeCallbacks(slider);
-                handler.postDelayed(slider,5000);
-            }
-        });
+
     }
 
-    private Runnable slider=new Runnable() {
-        @Override
-        public void run() {
-            if (currentItem==imageSlides.size()-1){
-                currentItem=0;
-                binding.imageSlider.setCurrentItem(currentItem);
-            }else {
-                binding.imageSlider.setCurrentItem(++currentItem);
-            }
-
-        }
-    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -214,11 +167,6 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void doClose() {
-        Toast.makeText(MainActivity.this, "Close", Toast.LENGTH_SHORT).show();
-        binding.searchLayout.setVisibility(View.GONE);
-        binding.mainLayout.setVisibility(View.VISIBLE);
-    }
 
 
     @Override

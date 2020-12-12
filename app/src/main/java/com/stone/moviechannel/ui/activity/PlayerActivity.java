@@ -1,25 +1,17 @@
 package com.stone.moviechannel.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.MediaController;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.util.Util;
 import com.stone.moviechannel.R;
-import com.stone.moviechannel.databinding.ActivityPlayerBinding;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,19 +21,15 @@ public class PlayerActivity extends AppCompatActivity {
     private int currentWindow = 0;
     private long playbackPosition = 0;
     private SimpleExoPlayer player;
-   // private ActivityPlayerBinding binding;
-    private MediaController mediaController;
-    private ProgressDialog pDialog;
     private static String url = "";
     private PlayerView playerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        binding = ActivityPlayerBinding.inflate(LayoutInflater.from(this));
-       setContentView(R.layout.activity_player);
+      setContentView(R.layout.activity_player);
         playerView=findViewById(R.id.video_view);
-//initializePlayer();
+
 
 
     }
@@ -53,13 +41,16 @@ public class PlayerActivity extends AppCompatActivity {
 
     }
     private void initializePlayer() {
+
         player = new SimpleExoPlayer.Builder(this).build();
         playerView.setPlayer(player);
+
         MediaItem mediaItem = MediaItem.fromUri(Uri.parse(url));
         player.setMediaItem(mediaItem);
         player.setPlayWhenReady(playWhenReady);
         player.seekTo(currentWindow, playbackPosition);
         player.prepare();
+
     }
     @Override
     public void onStart() {

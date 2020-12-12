@@ -7,10 +7,11 @@ import java.util.List;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 @Dao
 public interface MovieDao {
-    @Query("select * from movie order by id desc")
+    @Query("select * from movie where movieType != 'menu' order by id desc")
     List<Movie> getAllMovie();
 
 
@@ -26,5 +27,19 @@ public interface MovieDao {
     @Query("Select * from movie order by id desc")
     List<Movie> searchByViewer();
 
+    @Update
+    void updateBookmark(Movie movie);
+
+    @Query("select * from movie where id=:mid")
+    Movie getMovieById(int mid);
+
+    @Query("Select * from movie where movieType != 'menu' order by download desc")
+    List<Movie> getDownload();
+
+    @Query("Select * from movie where movieType != 'menu' order by viewer desc")
+    List<Movie> getViewer();
+
+    @Query("Select * from movie  where bookmark=1 AND movieType != 'menu' ")
+    List<Movie> getBookMark();
 
 }

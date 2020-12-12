@@ -25,7 +25,7 @@ public class VideoList extends AppCompatActivity implements onClickMovie, GetAll
 
     private ActivityVideoListBinding binding;
     private MovieAdapter adapter;
-    private static String videoType;
+    private static String videoType="blank";
     private static List<Movie> movies;
     private AppModel appModel;
 
@@ -41,16 +41,21 @@ public class VideoList extends AppCompatActivity implements onClickMovie, GetAll
         binding = ActivityVideoListBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
 
-      //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         appModel=AppModel.getINSTANCE(this);
 
         adapter = new MovieAdapter(this, this);
-        if (videoType==null) {
-            adapter.setMovieList(movies);
-        }else {
-            appModel.getAll(this);
+
+        switch (videoType){
+            case "viewer":
+                appModel.getViewer(this);break;
+            case "download":
+                appModel.getDownload(this);break;
+            case "bookmark":appModel.getBookMark(this);
+            case "blank":
+               adapter.setMovieList(movies); break;
+
         }
+
 
         binding.listRv.setLayoutManager(new GridLayoutManager(this, 3));
         binding.listRv.setAdapter(adapter);
