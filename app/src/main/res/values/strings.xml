@@ -20,9 +20,10 @@
     <string name="about">About</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="config">Config</string>
+    <string name="config"><font color="#FFC5BFBF">Config</font></string>
     <string name="setting">Setting</string>
-    <string name="categories">Categories</string>
+    <string name="categories"><font color="#FFC5BFBF">Categories</font></string>
     <string name="search">Search</string>
     <string name="bookmark">Bookmark</string>
+    <string name="animation">Animation</string>
 </resources>

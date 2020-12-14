@@ -19,12 +19,18 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:textColor="@color/colorAccent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:typeface="monospace"
             android:text="@string/drama" />
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/seeAll_drama"
             android:layout_width="0dp"
+            android:textColor="@color/colorAccent"
             android:layout_weight="1"
+            android:textStyle="bold"
+            android:typeface="monospace"
             android:gravity="end"
             android:layout_height="wrap_content"
             android:text="@string/see_all" />

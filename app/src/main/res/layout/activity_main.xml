@@ -11,6 +11,7 @@
     android:id="@+id/search_layout"
     android:layout_marginTop="10dp"
     android:visibility="gone"
+    android:background="@color/colorPrimary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"/>
     <ScrollView
@@ -111,7 +112,11 @@
         android:id="@+id/naviView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
         android:layout_gravity="start"
+        android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
+        app:itemIconTint="@color/colorWhite"
+        app:itemTextColor="@color/colorWhite"
         app:menu="@menu/nav_menu"/>
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -18,16 +18,23 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/action" />
+            android:layout_weight="1"
+            android:text="@string/action"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/seeAll_action"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="end"
-            android:layout_height="wrap_content"
-            android:text="@string/see_all" />
+            android:text="@string/see_all"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:typeface="monospace" />
     </androidx.appcompat.widget.LinearLayoutCompat>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc_action"

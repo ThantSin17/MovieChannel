@@ -1,5 +1,7 @@
 package com.stone.moviechannel.ui.activity;
 
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -33,6 +35,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -125,10 +128,19 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
 
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        Drawable drawable=getResources().getDrawable(R.drawable.ic_search_black_24dp);
+        drawable.setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+        menu.findItem(R.id.app_bar_search).setIcon(drawable);
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu,menu);
+
         MenuItem menuItemSearch = menu.findItem(R.id.app_bar_search);
         SearchView searchView= (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
         searchView.setQueryHint("Search");

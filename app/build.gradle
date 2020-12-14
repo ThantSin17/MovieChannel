@@ -52,7 +52,8 @@ dependencies {
     //url extractor
     implementation 'com.github.KhunHtetzNaing:xGetter:3.0'
 
-
+    //font detector
+    implementation 'myatminsoe.mdetect.android:mdetect-android:3.2'
 
     //player
     implementation 'com.google.android.exoplayer:exoplayer-core:2.12.0'
