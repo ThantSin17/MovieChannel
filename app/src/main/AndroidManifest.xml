@@ -36,8 +36,6 @@
             android:launchMode="singleInstance" />
         <activity
             android:name=".ui.activity.MainActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:launchMode = "singleInstance"
             android:theme="@style/MainTheme" />
     </application>
 

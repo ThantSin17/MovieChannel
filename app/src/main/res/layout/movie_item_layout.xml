@@ -19,7 +19,7 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/item_image"
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="200dp"
             android:scaleType="fitXY"
             android:src="@drawable/spiderman_homecoming" />
@@ -31,9 +31,11 @@
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="@string/title"
-            android:textAlignment="center"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:maxLines="1"
+            android:textColor="@color/colorWhite"
+            android:textSize="13sp"
+            android:background="#33373C"
+            />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.cardview.widget.CardView>

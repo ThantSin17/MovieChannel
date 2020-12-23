@@ -50,7 +50,8 @@ public class VideoList extends AppCompatActivity implements onClickMovie, GetAll
                 appModel.getViewer(this);break;
             case "download":
                 appModel.getDownload(this);break;
-            case "bookmark":appModel.getBookMark(this);
+            case "bookmark":
+                appModel.getBookMark(this);break;
             case "blank":
                adapter.setMovieList(movies); break;
 

@@ -1,19 +1,33 @@
 package com.stone.moviechannel.ui.activity;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthCredential;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.stone.moviechannel.R;
 import com.stone.moviechannel.adapter.MovieAdapter;
-import com.stone.moviechannel.data.ImageSlide;
 import com.stone.moviechannel.data.Movie;
 import com.stone.moviechannel.databinding.ActivityMainBinding;
 import com.stone.moviechannel.listener.GetAllMovie;
@@ -32,10 +46,10 @@ import com.stone.moviechannel.ui.fragment.SuperHeroFragment;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -45,7 +59,11 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
     private ActivityMainBinding binding;
     private ActionBarDrawerToggle toggle;
     private MovieAdapter mAdapter;
+    private static final int RC_SIGN_IN = 9001;
+    private GoogleSignInClient mGoogleSignInClient;
+    private FirebaseAuth mAuth;
     private AppModel appModel;
+    TextView singIn,singOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +71,30 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
         binding=ActivityMainBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
 
+        //Google SingIn
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        //Initialize Firebase Auth
+        mAuth=FirebaseAuth.getInstance();
+
+        View headerContainer = binding.naviView.getHeaderView(0); // This returns the container layout from your navigation drawer header layout file (e.g., the parent RelativeLayout/LinearLayout in your my_nav_drawer_header.xml file)
+         singIn = (TextView)headerContainer.findViewById(R.id.singin);
+         singOut = (TextView)headerContainer.findViewById(R.id.singout);
+
+         //onClick SingIn
+        singIn.setOnClickListener(view->{
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, RC_SIGN_IN);
+        });
+
+        //onClick SingOut
+        singOut.setOnClickListener(view->{
+            FirebaseAuth.getInstance().signOut();
+        });
 
         appModel=AppModel.getINSTANCE(this);
         mAdapter=new MovieAdapter(this,this);
@@ -79,10 +121,10 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
                         startActivity(VideoList.goVideoList(MainActivity.this,"download"));
                         binding.drawerLayout.closeDrawers();
                         break;
-//                    case R.id.top_rating:
-//                        startActivity(VideoList.goVideoList(MainActivity.this,"rating"));
-//                        binding.drawerLayout.closeDrawers();
-//                        break;
+                    case R.id.top_rating:
+                        startActivity(VideoList.goVideoList(MainActivity.this,"rating"));
+                        binding.drawerLayout.closeDrawers();
+                        break;
                     case R.id.book_mark:
                         startActivity(VideoList.goVideoList(MainActivity.this,"bookmark"));
                         binding.drawerLayout.closeDrawers();
@@ -180,6 +222,19 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
+    }
+
+    private void updateUI(FirebaseUser currentUser) {
+        if (currentUser!=null){
+            singIn.setText(currentUser.getEmail());
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -202,5 +257,35 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
     @Override
     public void fail(String message) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==RC_SIGN_IN){
+            Task<GoogleSignInAccount> task=GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account=task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account.getIdToken());
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, e.getMessage()+"error", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential= GoogleAuthProvider.getCredential(idToken,null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()){
+                            FirebaseUser user=mAuth.getCurrentUser();
+                            updateUI(user);
+                        }else {
+
+                            Toast.makeText(this, "Fail", Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                });
     }
 }

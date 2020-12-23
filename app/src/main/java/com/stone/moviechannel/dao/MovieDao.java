@@ -21,7 +21,7 @@ public interface MovieDao {
     @Query("DELETE FROM movie")
     public void NullTable();
 
-    @Query("select * from movie where movieType like :category order by id desc")
+    @Query("select * from movie where movieType like '%' || :category || '%' order by id desc")
     List<Movie> getMovie(String category);
 
     @Query("Select * from movie order by id desc")
