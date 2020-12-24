@@ -26,6 +26,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.stone.moviechannel.R;
 import com.stone.moviechannel.adapter.MovieAdapter;
 import com.stone.moviechannel.data.Movie;
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     private AppModel appModel;
+    private DatabaseReference users;
     TextView singIn,singOut;
 
     @Override
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
 
         //Initialize Firebase Auth
         mAuth=FirebaseAuth.getInstance();
+        users= FirebaseDatabase.getInstance().getReference().child("MovieChannel").child("Users");
 
         View headerContainer = binding.naviView.getHeaderView(0); // This returns the container layout from your navigation drawer header layout file (e.g., the parent RelativeLayout/LinearLayout in your my_nav_drawer_header.xml file)
          singIn = (TextView)headerContainer.findViewById(R.id.singin);
@@ -93,7 +97,14 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
 
         //onClick SingOut
         singOut.setOnClickListener(view->{
-            FirebaseAuth.getInstance().signOut();
+            mAuth.signOut();
+            mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                    new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            updateUI(null);
+                        }
+                    });
         });
 
         appModel=AppModel.getINSTANCE(this);
@@ -233,6 +244,8 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser!=null){
             singIn.setText(currentUser.getEmail());
+        }else{singIn.setText("Sign In");
+
         }
     }
 
@@ -280,6 +293,9 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
                 .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()){
                             FirebaseUser user=mAuth.getCurrentUser();
+                            DatabaseReference current_user_db=users.child(user.getUid());
+                            current_user_db.child("Username").setValue(user.getDisplayName());
+                            current_user_db.child("Image").setValue(user.getPhotoUrl().toString());
                             updateUI(user);
                         }else {
 

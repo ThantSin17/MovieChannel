@@ -25,6 +25,7 @@ import com.stone.moviechannel.data.Movie;
 import com.stone.moviechannel.databinding.ChooseQualityLayoutBinding;
 import com.stone.moviechannel.databinding.SingleMovieDetailBinding;
 import com.stone.moviechannel.model.AppModel;
+import com.stone.moviechannel.ui.fragment.CommentFragment;
 import com.stone.moviechannel.utils.FontConverter;
 
 import java.io.File;
@@ -36,6 +37,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import me.myatminsoe.mdetect.MDetect;
 import me.myatminsoe.mdetect.Rabbit;
 
@@ -72,6 +75,13 @@ public class SingleMovieDetail extends AppCompatActivity {
         pb.setCancelable(false);
         bookmark=movie.bookmark;
 
+
+        //call Comment Fragment
+        CommentFragment commentFragment=new CommentFragment(movie.id+"");
+        FragmentManager manager=getSupportFragmentManager();
+        FragmentTransaction transaction=manager.beginTransaction();
+        transaction.add(R.id.layout_comment,commentFragment);
+        transaction.commit();
 
         xGetter = new LowCostVideo(SingleMovieDetail.this);
         xGetter.onFinish(new LowCostVideo.OnTaskCompleted() {

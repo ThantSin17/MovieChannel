@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.stone.moviechannel.data.Comment;
 import com.stone.moviechannel.databinding.CommentItemBinding;
 
@@ -25,6 +26,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -38,6 +40,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
             Comment comment=comments.get(position);
             holder.bind(comment);
+
     }
 
     @Override
@@ -59,6 +62,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         public void bind(Comment comment){
             binding.userName.setText(comment.userName);
             binding.content.setText(comment.content);
+            Glide.with(context).load(comment.photo).into(binding.profileImage);
         }
     }
 }

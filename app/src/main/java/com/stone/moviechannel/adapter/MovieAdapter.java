@@ -42,6 +42,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void setMovieList(List<Movie> movieList) {
         this.movieList = movieList;
         tempList=movieList;
+
+        //need to reload data
         notifyDataSetChanged();
     }
     public void filter(String s){
