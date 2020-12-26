@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide;
 import com.stone.moviechannel.data.Comment;
 import com.stone.moviechannel.databinding.CommentItemBinding;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +63,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         public void bind(Comment comment){
             binding.userName.setText(comment.userName);
             binding.content.setText(comment.content);
+            SimpleDateFormat format=new SimpleDateFormat("hh:mm");
+            binding.time.setText(format.format(comment.time));
             Glide.with(context).load(comment.photo).into(binding.profileImage);
         }
     }

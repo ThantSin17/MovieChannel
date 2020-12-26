@@ -8,9 +8,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -52,6 +54,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -67,6 +70,13 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
     private AppModel appModel;
     private DatabaseReference users;
     TextView singIn,singOut;
+    ImageView profileImg;
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,24 +97,31 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
 
         View headerContainer = binding.naviView.getHeaderView(0); // This returns the container layout from your navigation drawer header layout file (e.g., the parent RelativeLayout/LinearLayout in your my_nav_drawer_header.xml file)
          singIn = (TextView)headerContainer.findViewById(R.id.singin);
+         profileImg=(ImageView) headerContainer.findViewById(R.id.imgView);
          singOut = (TextView)headerContainer.findViewById(R.id.singout);
 
          //onClick SingIn
         singIn.setOnClickListener(view->{
-            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-            startActivityForResult(signInIntent, RC_SIGN_IN);
+
         });
 
         //onClick SingOut
         singOut.setOnClickListener(view->{
-            mAuth.signOut();
-            mGoogleSignInClient.signOut().addOnCompleteListener(this,
-                    new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            updateUI(null);
-                        }
-                    });
+            if(singOut.getText().toString().equals("Sign In")){
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+
+            }else {
+                mAuth.signOut();
+                mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                        new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                updateUI(null);
+                            }
+                        });
+
+            }
         });
 
         appModel=AppModel.getINSTANCE(this);
@@ -243,9 +260,13 @@ public class MainActivity extends AppCompatActivity implements onClickMovie, Get
 
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser!=null){
-            singIn.setText(currentUser.getEmail());
-        }else{singIn.setText("Sign In");
-
+            singOut.setText("Sign Out");
+            singIn.setText(currentUser.getDisplayName());
+            Glide.with(this).load(currentUser.getPhotoUrl().toString()).into(profileImg);
+        }else{
+            Glide.with(this).load(R.drawable.ic_baseline_account).into(profileImg);
+            singIn.setText("");
+            singOut.setText("Sign In");
         }
     }
 

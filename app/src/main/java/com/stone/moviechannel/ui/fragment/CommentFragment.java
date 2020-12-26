@@ -120,7 +120,7 @@ public class CommentFragment extends Fragment {
 
                     }
                     adapter.setComments(comments);
-                    binding.commentContent.setText("( "+ comments.size()+" )");
+                    binding.commentCount.setText("( "+ comments.size()+" )");
                 }
 
                 @Override
